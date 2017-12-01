@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Set API key
 
-        this.searchBox = (EditText) v.findViewById(R.id.search_box);
+        this.searchBox = (EditText) findViewById(R.id.search_box);
     }
 
     public void OnClickSearch(View view) {

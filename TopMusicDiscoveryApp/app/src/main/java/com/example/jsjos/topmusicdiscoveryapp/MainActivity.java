@@ -37,9 +37,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void OnClickSearch(View view) {
-        artistName = searchBox.getText().toString();
+        String unformattedString = searchBox.getText().toString();
         // Need to add + in between words of the String
-
+        unformattedString.replaceAll("\\s","+"); // Replace all whitespace with +
         // Start the search via the API
         //SearchForData.execute();
 

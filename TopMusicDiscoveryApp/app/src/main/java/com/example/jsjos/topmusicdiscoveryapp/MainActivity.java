@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("An error has occurred", e.getMessage(), e);
                 return null;
             }
+            return "MUST REPLACE THIS WITH THE JSON OBJECT YOU RETURN";
         }
 
         protected void onPostExecute(String resultResponse) {

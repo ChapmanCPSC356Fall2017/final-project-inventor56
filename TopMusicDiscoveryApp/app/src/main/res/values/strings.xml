@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">TopMusicDiscoveryApp</string>
+    <string name="enter_artist_text">Please enter the name of the artist you would like to search for</string>
+    <string name="search_button_text">Search</string>
+</resources>

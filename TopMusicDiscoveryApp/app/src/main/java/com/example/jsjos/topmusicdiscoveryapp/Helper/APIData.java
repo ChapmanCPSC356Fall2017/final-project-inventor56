@@ -20,6 +20,9 @@ import java.io.IOException;
 
 public class APIData {
 
+    public static final MediaType TEST_MEDIA_TYPE
+            = MediaType.parse("application/x-www-form-urlencoded; charset=utf-8" );
+
     private final String client_id = "66311e9bfa0648fb8d29b41ce627f985";
     private final String secret_id = "aaf1401b0acd4af19e8a22b26683cc1b";
     private final String grant_type = "client_credentials";
@@ -29,12 +32,14 @@ public class APIData {
 
     private final String DEBUGTAG = "API Data Log";
 
-    private String ResponseString; // This won't be set until a response comes in. Be Careful!
+    private String ResponseString = "null for the moment"; // This won't be set until a response comes in. Be Careful!
 
     public String Authenticate() throws Exception {
 
         Request request = new Request.Builder()
                 .url(urlAuthorize)
+                .addHeader("Authorization",client_id+secret_id )
+                .post(RequestBody.create(TEST_MEDIA_TYPE, grant_type))
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -49,7 +54,7 @@ public class APIData {
                 ResponseString = response.body().string();
             }
         });
-        //Log.d(DEBUGTAG, responseConverted[0]);
+        Log.d(DEBUGTAG, ResponseString);
 
         //return responseConverted[0]; // return response
         return ResponseString; // return response

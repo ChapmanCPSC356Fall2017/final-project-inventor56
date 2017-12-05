@@ -25,7 +25,7 @@ public class APIData {
 
     private final String client_id = "66311e9bfa0648fb8d29b41ce627f985";
     private final String secret_id = "aaf1401b0acd4af19e8a22b26683cc1b";
-    private final String grant_type = "client_credentials";
+    private final String grant_type = "grant_type=client_credentials";
 
     private final OkHttpClient client = new OkHttpClient();
     private final String urlAuthorize = "https://accounts.spotify.com/api/token";
@@ -38,7 +38,7 @@ public class APIData {
 
         Request request = new Request.Builder()
                 .url(urlAuthorize)
-                .addHeader("Authorization",client_id+secret_id )
+                .addHeader("Authorization","Basic " +client_id+secret_id )
                 .post(RequestBody.create(TEST_MEDIA_TYPE, grant_type))
                 .build();
 

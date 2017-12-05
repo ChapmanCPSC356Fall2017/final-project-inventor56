@@ -42,9 +42,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void OnClickSearch(View view) throws Exception {
+        // Format user's search request so that it can be entered into the GET request
         String unformattedString = searchBox.getText().toString();
         // Need to add + in between words of the String
-        unformattedString.replaceAll("\\s","+"); // Replace all whitespace with +
+        String ArtistName = unformattedString.replaceAll("\\s","+"); // Replace all whitespace with +
         // Start the search via the API
         //SearchForData.execute();
 

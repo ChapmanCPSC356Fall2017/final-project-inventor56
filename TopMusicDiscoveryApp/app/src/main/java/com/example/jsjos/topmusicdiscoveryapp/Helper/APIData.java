@@ -63,4 +63,30 @@ public class APIData {
         //return responseConverted[0]; // return response
         return ResponseString; // return response
     }
+
+    public String SearchForArtist(String artistName) throws Exception {
+
+        Request request = new Request.Builder()
+                .url(urlAuthorize)
+                .addHeader("Authorization","Basic "+base64EncodedParam )
+                .post(RequestBody.create(TEST_MEDIA_TYPE, grant_type))
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                // Failure!
+                ResponseString = "Failure!";
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                ResponseString = response.body().string();
+            }
+        });
+        Log.d(DEBUGTAG, ResponseString);
+
+        //return responseConverted[0]; // return response
+        return ResponseString; // return response
+    }
 }

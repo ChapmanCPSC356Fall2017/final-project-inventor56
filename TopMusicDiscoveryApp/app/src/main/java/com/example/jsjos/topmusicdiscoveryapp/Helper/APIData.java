@@ -27,9 +27,9 @@ public class APIData {
     private final OkHttpClient client = new OkHttpClient();
     private final String urlAuthorize = "https://accounts.spotify.com/api/token";
 
-    private final String DEBUGTAG = "adD";
+    private final String DEBUGTAG = "API Data Log";
 
-    private String ResponseString;
+    private String ResponseString; // This won't be set until a response comes in. Be Careful!
 
     public String Authenticate() throws Exception {
 

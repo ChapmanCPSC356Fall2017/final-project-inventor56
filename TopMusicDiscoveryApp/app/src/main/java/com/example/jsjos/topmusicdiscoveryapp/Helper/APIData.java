@@ -23,8 +23,12 @@ public class APIData {
     public static final MediaType TEST_MEDIA_TYPE
             = MediaType.parse("application/x-www-form-urlencoded; charset=utf-8" );
 
+    // Given spotify keys for application
     private final String client_id = "66311e9bfa0648fb8d29b41ce627f985";
     private final String secret_id = "aaf1401b0acd4af19e8a22b26683cc1b";
+
+    // May want to encode this in software later on, but should be workable for now
+    private final String base64EncodedParam = "NjYzMTFlOWJmYTA2NDhmYjhkMjliNDFjZTYyN2Y5ODU6YWFmMTQwMWIwYWNkNGFmMTllOGEyMmIyNjY4M2NjMWI=";
     private final String grant_type = "grant_type=client_credentials";
 
     private final OkHttpClient client = new OkHttpClient();
@@ -38,7 +42,7 @@ public class APIData {
 
         Request request = new Request.Builder()
                 .url(urlAuthorize)
-                .addHeader("Authorization","Basic " +client_id+secret_id )
+                .addHeader("Authorization","Basic "+base64EncodedParam )
                 .post(RequestBody.create(TEST_MEDIA_TYPE, grant_type))
                 .build();
 
@@ -59,6 +63,4 @@ public class APIData {
         //return responseConverted[0]; // return response
         return ResponseString; // return response
     }
-
-
 }

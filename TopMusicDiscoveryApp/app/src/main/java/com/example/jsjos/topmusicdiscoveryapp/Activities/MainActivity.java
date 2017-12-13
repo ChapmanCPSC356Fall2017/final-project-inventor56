@@ -95,7 +95,11 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(LOGTAG, "Artist is " + artist.getArtistID());
                 artistInfoObj = artist; // Set artist info object
 
-
+                try {
+                    SearchForTracks(artistInfoObj.getArtistID());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

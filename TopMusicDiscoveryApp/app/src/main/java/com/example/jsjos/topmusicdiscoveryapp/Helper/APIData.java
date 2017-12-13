@@ -89,10 +89,11 @@ public class APIData {
 
             @Override
             public void onResponse(Response response) throws IOException {
-                //Log.e(DEBUGTAG, ResponseString);
+                String ResponseString = response.body().string();
+                Log.e(DEBUGTAG, ResponseString);
                 Gson gson = new Gson(); // JSON parser
 
-                ArtistInfo artistInfo = gson.fromJson(response.body().string(), ArtistInfo.class); // Set authorization credentials
+                ArtistInfo artistInfo = gson.fromJson(ResponseString, ArtistInfo.class); // Set authorization credentials
                 call.onResult(artistInfo); // Callback the results of the authentication API request
             }
         });

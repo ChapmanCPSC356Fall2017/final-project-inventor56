@@ -9,21 +9,37 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class ArtistInfo {
-    @SerializedName("artists")
+    //@SerializedName("artists")
     public Artist artists;
     //public String ArtistID;
+    public String getHref() {
+        return artists.href;
+    }
 
 }
 
 class Artist {
     public String href;
-    public List<Item> items;
+    public Item[] items;
+    public int limit;
+    public String next;
+    public int offset;
+    public String previous;
+    public int total;
+
 }
 
 class Item {
-    public ExternalUrl external_url;
-    public List<Genre> genres;
+    public ExternalUrl external_urls;
+    public Follower followers;
+    public String[] genres;
     public String href;
+    public String id;
+    public Image[] images;
+    public String name;
+    public int popularity;
+    public String type;
+    public String uri;
 
 }
 
@@ -31,11 +47,12 @@ class ExternalUrl {
     public String spotify;
 }
 
-class Genre {
-
+class Follower {
+    public String href;
+    public int total;
 }
 
-class Images {
+class Image{
     public int height;
     public String url;
     public int width;

@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onResult(ArtistInfo artist) {
-                Log.e(LOGTAG, "Artist is " + artist.ArtistID);
+                Log.e(LOGTAG, "Artist is " + artist.getHref());
             }
         });
     }

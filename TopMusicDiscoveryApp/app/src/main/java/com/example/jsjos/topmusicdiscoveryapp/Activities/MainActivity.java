@@ -72,7 +72,8 @@ public class MainActivity extends AppCompatActivity {
         if (!accessCredAttained) // If the access credentials are not yet in the app
             GetAccessTokens();
 
-        SearchForSongs(ArtistName); // Could be error here....
+        //SearchForSongs(ArtistName); // Could be error here....
+        Log.e(LOGTAG, "This runs first");
 
 
 

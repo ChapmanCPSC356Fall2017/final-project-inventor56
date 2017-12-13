@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResult(TopTracks topTenTracks) {
                 int rank = 1;
-                Log.e(LOGTAG, "Song at" + rank + " is " + topTenTracks.getTrackName(rank));
+                Log.e(LOGTAG, "Song at #" + rank + " is " + topTenTracks.getTrackName(rank));
                 topTenTracksObj = topTenTracks; // Set top Ten Tracks Object
 
 

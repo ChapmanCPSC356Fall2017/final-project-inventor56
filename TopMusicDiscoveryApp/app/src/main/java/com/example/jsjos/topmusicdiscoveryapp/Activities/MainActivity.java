@@ -69,13 +69,10 @@ public class MainActivity extends AppCompatActivity {
         //String ArtistName = unformattedString.replaceAll("\\s","+"); // Replace all whitespace with +
         String ArtistName = URLEncoder.encode(unformattedString, "UTF-8");
 
-        if (!accessCredAttained) // If the access credentials are not yet in the app
-            GetAccessTokens();
+        GetAccessTokens(ArtistName);
 
         //SearchForSongs(ArtistName); // Could be error here....
         Log.e(LOGTAG, "This runs first");
-
-
 
     }
 
@@ -84,72 +81,41 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Exception e) {
                 Log.e(LOGTAG, "Failure here");
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                    }
-                });
             }
 
             @Override
             public void onResult(ArtistInfo artist) {
                 Log.e(LOGTAG, "Artist is " + artist.ArtistID);
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                    }
-                });
             }
         });
     }
 
-    public void GetAccessTokens() throws Exception {
-        api.Authenticate(new APIData.AuthorizationCallback() {
-            @Override
-            public void onFailure(Exception e) {
-                Log.e(LOGTAG, "Failure here");
+    public void GetAccessTokens(final String artist) throws Exception {
 
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
 
-                    }
-                });
-            }
+        if (!accessCredAttained){
+            api.Authenticate(new APIData.AuthorizationCallback() {
+                @Override
+                public void onFailure(Exception e) {
+                    Log.e(LOGTAG, "Failure here");
 
-            @Override
-            public void onResult(AccessCredentials accessCred) {
-                // Store here
-                Log.e(LOGTAG, "Successful Callback!");
-                authorizationInfo = accessCred; //  Set the authorization details to what was returned in the callback
-                accessCredAttained = true;
+                }
 
-                // Change below later!
-                //Intent test = new Intent(MainActivity.this, ResultsActivity.class);
-                //test.putExtra(
-                //startActivity(test);
-                // Change the above after we've tested!
+                @Override
+                public void onResult(AccessCredentials accessCred) {
+                    // Store here
+                    Log.e(LOGTAG, "Successful Callback!");
+                    authorizationInfo = accessCred; //  Set the authorization details to what was returned in the callback
+                    accessCredAttained = true;
+                    //SearchForSongs(artist);
 
-                Log.e(LOGTAG, authorizationInfo.accessToken);
+                    Log.e(LOGTAG, authorizationInfo.accessToken);
+                }
+            }); // Authenticate with server;
+        }
+        else {
+            SearchForSongs(artist); }
 
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                    }
-                });
-
-            }
-        }); // Authenticate with server;
-
-        // Start the search via the API
-        //SearchForData.execute();
-
-        //Log.e(LOGTAG, test);
     }
 
 

@@ -19,7 +19,7 @@ public class ResultsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.song_view_layout);
 
-        showFrag(SongFragment);
+        //showFrag(SongFragment);
 
     }
 

@@ -3,6 +3,7 @@ package com.example.jsjos.topmusicdiscoveryapp.Helper;
 import android.util.Log;
 
 import com.example.jsjos.topmusicdiscoveryapp.JSONObjects.AccessCredentials;
+import com.example.jsjos.topmusicdiscoveryapp.JSONObjects.ArtistInfo;
 import com.google.gson.Gson;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Headers;
@@ -34,13 +35,16 @@ public class APIData {
     private final String grant_type = "grant_type=client_credentials";
 
     private final OkHttpClient client = new OkHttpClient();
+    // URLs
     private final String urlAuthorize = "https://accounts.spotify.com/api/token";
+    private final String urlSearchArtist = "https://api.spotify.com/v1/search";
+
 
     private final String DEBUGTAG = "API Data Log";
 
-    private String ResponseString = "null for the moment"; // This won't be set until a response comes in. Be Careful!
+    //private String ResponseString = "null for the moment"; // This won't be set until a response comes in. Be Careful!
 
-    public void Authenticate(final Callback call) throws Exception {
+    public void Authenticate(final AuthorizationCallback call) throws Exception {
 
         Request request = new Request.Builder()
                 .url(urlAuthorize)
@@ -52,25 +56,56 @@ public class APIData {
             @Override
             public void onFailure(Request request, IOException e) {
                 // Failure!
-                ResponseString = "Failure!";
+                //ResponseString = "Failure!";
                 call.onFailure(e);
             }
 
             @Override
             public void onResponse(Response response) throws IOException {
-                ResponseString = response.body().string();
-                Log.e(DEBUGTAG, ResponseString);
+                //ResponseString = response.body().string();
+                //Log.e(DEBUGTAG, ResponseString);
+
                 Gson gson = new Gson(); // JSON parser
 
-                AccessCredentials authInfo = gson.fromJson(ResponseString, AccessCredentials.class); // Set authorization credentials
+                AccessCredentials authInfo = gson.fromJson(response.body().string(), AccessCredentials.class); // Set authorization credentials
                 call.onResult(authInfo); // Callback the results of the authentication API request
             }
         });
     }
+    public void SearchForArtists(String artistName, String authorization, final ArtistSearchCallback call) throws Exception {
 
-    public interface Callback {
+        Request request = new Request.Builder()
+                .url(urlSearchArtist+"?q="+artistName+"&type=artist&limit=1") // Url with artist name, limit to first result
+                .addHeader("Authorization","Bearer "+authorization )
+                .build();
+
+        client.newCall(request).enqueue(new com.squareup.okhttp.Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                // Failure! Could not find artist
+                //ResponseString = "Failure!";
+                call.onFailure(e);
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                //Log.e(DEBUGTAG, ResponseString);
+
+                Gson gson = new Gson(); // JSON parser
+
+                ArtistInfo artistInfo = gson.fromJson(response.body().string(), ArtistInfo.class); // Set authorization credentials
+                call.onResult(artistInfo); // Callback the results of the authentication API request
+            }
+        });
+    }
+
+    public interface AuthorizationCallback {
         void onFailure(Exception e); // From Stock API
         void onResult(AccessCredentials accessCred); // From Stock API
+    }
+    public interface ArtistSearchCallback {
+        void onFailure(Exception e); // From Stock API
+        void onResult(ArtistInfo artist); // From Stock API
     }
 
 }

@@ -1,6 +1,7 @@
 package com.example.jsjos.topmusicdiscoveryapp.Activities;
 
 import android.content.Intent;
+import android.os.Debug;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -13,6 +14,7 @@ import android.widget.EditText;
 
 import com.example.jsjos.topmusicdiscoveryapp.Helper.APIData;
 import com.example.jsjos.topmusicdiscoveryapp.JSONObjects.AccessCredentials;
+import com.example.jsjos.topmusicdiscoveryapp.JSONObjects.ArtistInfo;
 import com.example.jsjos.topmusicdiscoveryapp.R;
 
 import java.io.BufferedReader;
@@ -77,11 +79,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void SearchForSongs (String artist) throws Exception {
+        api.SearchForArtists(artist, authorizationInfo.accessToken, new APIData.ArtistSearchCallback() {
+            @Override
+            public void onFailure(Exception e) {
+                Log.e(LOGTAG, "Failure here");
 
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onResult(ArtistInfo artist) {
+                Log.e(LOGTAG, "Artist is " + artist.ArtistID);
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
+                });
+            }
+        });
     }
 
     public void GetAccessTokens() throws Exception {
-        api.Authenticate(new APIData.Callback() {
+        api.Authenticate(new APIData.AuthorizationCallback() {
             @Override
             public void onFailure(Exception e) {
                 Log.e(LOGTAG, "Failure here");
@@ -102,10 +128,12 @@ public class MainActivity extends AppCompatActivity {
                 accessCredAttained = true;
 
                 // Change below later!
-                Intent test = new Intent(MainActivity.this, ResultsActivity.class);
-                test.putExtra(
-                startActivity(test);
+                //Intent test = new Intent(MainActivity.this, ResultsActivity.class);
+                //test.putExtra(
+                //startActivity(test);
                 // Change the above after we've tested!
+
+                Log.e(LOGTAG, authorizationInfo.accessToken);
 
                 runOnUiThread(new Runnable() {
                     @Override

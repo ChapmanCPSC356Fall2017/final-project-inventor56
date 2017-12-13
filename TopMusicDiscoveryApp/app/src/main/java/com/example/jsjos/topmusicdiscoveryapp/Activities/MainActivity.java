@@ -15,6 +15,7 @@ import android.widget.EditText;
 import com.example.jsjos.topmusicdiscoveryapp.Helper.APIData;
 import com.example.jsjos.topmusicdiscoveryapp.JSONObjects.AccessCredentials;
 import com.example.jsjos.topmusicdiscoveryapp.JSONObjects.ArtistInfo;
+import com.example.jsjos.topmusicdiscoveryapp.JSONObjects.TopTracks;
 import com.example.jsjos.topmusicdiscoveryapp.R;
 
 import java.io.BufferedReader;
@@ -42,6 +43,12 @@ public class MainActivity extends AppCompatActivity {
 
     // Access Credentials Object
     private AccessCredentials authorizationInfo;
+
+    //Artist Info Object
+    private ArtistInfo artistInfoObj;
+
+    //Top Ten Tracks Object
+    private TopTracks topTenTracksObj;
     // Boolean to check if app has already been authorized
     private boolean accessCredAttained;
 
@@ -85,7 +92,28 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onResult(ArtistInfo artist) {
-                Log.e(LOGTAG, "Artist is " + artist.getHref());
+                Log.e(LOGTAG, "Artist is " + artist.getArtistID());
+                artistInfoObj = artist; // Set artist info object
+
+
+            }
+        });
+    }
+
+    public void SearchForTracks (String artistID) throws Exception {
+        api.SearchForTopTen(artistID, authorizationInfo.accessToken, new APIData.TopTenCallback() {
+            @Override
+            public void onFailure(Exception e) {
+                Log.e(LOGTAG, "Failure here");
+            }
+
+            @Override
+            public void onResult(TopTracks topTenTracks) {
+                int rank = 1;
+                Log.e(LOGTAG, "Song at" + rank + " is " + topTenTracks.getTrackName(rank));
+                topTenTracksObj = topTenTracks; // Set top Ten Tracks Object
+
+
             }
         });
     }

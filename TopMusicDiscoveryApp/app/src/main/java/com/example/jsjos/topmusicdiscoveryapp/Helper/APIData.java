@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.example.jsjos.topmusicdiscoveryapp.JSONObjects.AccessCredentials;
 import com.example.jsjos.topmusicdiscoveryapp.JSONObjects.ArtistInfo;
+import com.example.jsjos.topmusicdiscoveryapp.JSONObjects.TopTracks;
 import com.google.gson.Gson;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Headers;
@@ -38,6 +39,7 @@ public class APIData {
     // URLs
     private final String urlAuthorize = "https://accounts.spotify.com/api/token";
     private final String urlSearchArtist = "https://api.spotify.com/v1/search";
+    private final String urlSearchTopTen = "https://api.spotify.com/v1/artists/";
 
 
     private final String DEBUGTAG = "API Data Log";
@@ -89,15 +91,43 @@ public class APIData {
 
             @Override
             public void onResponse(Response response) throws IOException {
-                String ResponseString = response.body().string();
-                Log.e(DEBUGTAG, ResponseString);
+                //String ResponseString = response.body().string();
+                //Log.e(DEBUGTAG, ResponseString);
                 Gson gson = new Gson(); // JSON parser
 
-                ArtistInfo artistInfo = gson.fromJson(ResponseString, ArtistInfo.class); // Set authorization credentials
-                call.onResult(artistInfo); // Callback the results of the authentication API request
+                ArtistInfo artistInfo = gson.fromJson(response.body().string(), ArtistInfo.class);
+                call.onResult(artistInfo); // Callback the results of the artist search
             }
         });
     }
+
+    public void SearchForTopTen(String artistID, String authorization, final TopTenCallback call) throws Exception {
+
+        Request request = new Request.Builder()
+                .url(urlSearchTopTen+artistID+"/top-tracks?country=US") // Url with artistID. Returns 10 results
+                .addHeader("Authorization","Bearer "+authorization )
+                .build();
+
+        client.newCall(request).enqueue(new com.squareup.okhttp.Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                // Failure! Could not find top ten tracks!
+                //ResponseString = "Failure!";
+                call.onFailure(e);
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                //String ResponseString = response.body().string();
+                //Log.e(DEBUGTAG, ResponseString);
+                Gson gson = new Gson(); // JSON parser
+
+                TopTracks tracks = gson.fromJson(response.body().string(), TopTracks.class);
+                call.onResult(tracks); // Callback the results of the top ten tracks search
+            }
+        });
+    }
+
 
     public interface AuthorizationCallback {
         void onFailure(Exception e); // From Stock API
@@ -106,6 +136,10 @@ public class APIData {
     public interface ArtistSearchCallback {
         void onFailure(Exception e); // From Stock API
         void onResult(ArtistInfo artist); // From Stock API
+    }
+    public interface TopTenCallback {
+        void onFailure(Exception e); // From Stock API
+        void onResult(TopTracks topTen); // From Stock API
     }
 
 }

@@ -11,10 +11,10 @@ import java.util.List;
 public class ArtistInfo {
     //@SerializedName("artists")
     public Artist artists;
-    //public String ArtistID;
-    public String getHref() {
-        return artists.href;
+    public String getArtistID() {
+        return artists.items[0].id; // Return the first artist found, since we limit our search to one artist
     }
+
 
 }
 

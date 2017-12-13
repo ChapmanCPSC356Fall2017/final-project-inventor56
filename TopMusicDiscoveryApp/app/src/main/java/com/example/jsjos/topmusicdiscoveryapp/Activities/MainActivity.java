@@ -107,7 +107,12 @@ public class MainActivity extends AppCompatActivity {
                     Log.e(LOGTAG, "Successful Callback!");
                     authorizationInfo = accessCred; //  Set the authorization details to what was returned in the callback
                     accessCredAttained = true;
-                    //SearchForSongs(artist);
+
+                    try {
+                        SearchForSongs(artist);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
                     Log.e(LOGTAG, authorizationInfo.accessToken);
                 }

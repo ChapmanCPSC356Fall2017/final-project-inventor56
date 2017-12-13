@@ -90,7 +90,6 @@ public class APIData {
             @Override
             public void onResponse(Response response) throws IOException {
                 //Log.e(DEBUGTAG, ResponseString);
-
                 Gson gson = new Gson(); // JSON parser
 
                 ArtistInfo artistInfo = gson.fromJson(response.body().string(), ArtistInfo.class); // Set authorization credentials

@@ -16,6 +16,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,7 +46,9 @@ public class MainActivity extends AppCompatActivity {
         // Format user's search request so that it can be entered into the GET request
         String unformattedString = searchBox.getText().toString();
         // Need to add + in between words of the String
-        String ArtistName = unformattedString.replaceAll("\\s","+"); // Replace all whitespace with +
+        //String ArtistName = unformattedString.replaceAll("\\s","+"); // Replace all whitespace with +
+        String ArtistName = URLEncoder.encode(unformattedString, "UTF-8");
+
         // Start the search via the API
         //SearchForData.execute();
 

@@ -2,6 +2,8 @@ package com.example.jsjos.topmusicdiscoveryapp.Helper;
 
 import android.util.Log;
 
+import com.example.jsjos.topmusicdiscoveryapp.JSONObjects.AccessCredentials;
+import com.google.gson.Gson;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Headers;
 import com.squareup.okhttp.MediaType;
@@ -38,6 +40,10 @@ public class APIData {
 
     private String ResponseString = "null for the moment"; // This won't be set until a response comes in. Be Careful!
 
+
+    // Access Credentials Object
+    private AccessCredentials authInfo;
+
     public String Authenticate() throws Exception {
 
         Request request = new Request.Builder()
@@ -56,6 +62,11 @@ public class APIData {
             @Override
             public void onResponse(Response response) throws IOException {
                 ResponseString = response.body().string();
+
+                Gson gson = new Gson(); // JSON parser
+
+                authInfo = gson.fromJson(ResponseString, AccessCredentials.class); // Set authorization credentials
+
             }
         });
         Log.d(DEBUGTAG, ResponseString);

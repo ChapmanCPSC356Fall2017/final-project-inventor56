@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.jsjos.topmusicdiscoveryapp.R;
+
 import org.w3c.dom.Text;
 
 /**
@@ -16,10 +18,9 @@ import org.w3c.dom.Text;
 
 public class SongFragment extends Fragment {
 
-    private TextView accessView;
-    private TextView tokenView;
-    private TextView expiresView;
-    private TextView stateView;
+    private TextView artistNameTV;
+    private TextView albumNameTV;
+    private TextView songNameTV;
 
     @Nullable
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,6 +32,12 @@ public class SongFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        View v = inflater.inflate(R.layout.song_fragment_layout, container, false);
+
+        this.artistNameTV = v.findViewById(R.id.tv_artist_name);
+        this.albumNameTV = v.findViewById(R.id.tv_album_name);
+        this.songNameTV = v.findViewById(R.id.tv_song_name);
+
+        return v;
     }
 }

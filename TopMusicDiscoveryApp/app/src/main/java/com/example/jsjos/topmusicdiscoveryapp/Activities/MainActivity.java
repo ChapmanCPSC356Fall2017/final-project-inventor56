@@ -135,13 +135,16 @@ public class MainActivity extends AppCompatActivity {
                 int rank = 1;
                 Log.e(LOGTAG, "Song at #" + rank + " is " + topTenTracks.getTrackName(rank));
                 topTenTracksObj = topTenTracks; // Set top Ten Tracks Object
-
+                Intent i = new Intent(MainActivity.this, SliderActivity.class);
+                startActivity(i);
+                /*
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         toggleLoading(false);
                     }
                 });
+                */
 
 
             }

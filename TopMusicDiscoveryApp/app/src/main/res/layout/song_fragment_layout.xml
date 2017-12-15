@@ -1,23 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/access_token_test"
+        android:id="@+id/tv_artist_name"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
     <TextView
-        android:id="@+id/token_type_test"
+        android:id="@+id/tv_album_name"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
     <TextView
-        android:id="@+id/expires_in_test"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-    <TextView
-        android:id="@+id/state_test"
+        android:id="@+id/tv_song_name"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

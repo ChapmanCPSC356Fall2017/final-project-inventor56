@@ -10,7 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.example.jsjos.topmusicdiscoveryapp.Helper.APIData;
 import com.example.jsjos.topmusicdiscoveryapp.JSONObjects.AccessCredentials;
@@ -36,8 +38,12 @@ public class MainActivity extends AppCompatActivity {
     private final String EXPIRE_EXTRA = "expire tester";
     private final String STATE_EXTRA = "state tester";
 
+
+    // Widgets
     private EditText searchBox;
-    public String API_URL = "https://api.spotify.com/v1/search"; // URL for API
+    private ProgressBar loadingBar;
+    private Button searchButton;
+
 
     public String artistName;
 
@@ -62,11 +68,20 @@ public class MainActivity extends AppCompatActivity {
         //Set API key
         this.searchBox = (EditText) findViewById(R.id.search_box);
 
+        //Set loading bar and button
+        this.loadingBar = (ProgressBar) findViewById(R.id.loading_wheel);
+        this.searchButton = (Button) findViewById(R.id.search_button);
+
         // First run, so we don't have the credentials yet (Spotify needs to authorize API request first)
         accessCredAttained = false;
 
         // Setup API class
         api = new APIData();
+    }
+
+    private void toggleLoading(boolean toggleOn) {
+        loadingBar.setVisibility(toggleOn ? View.VISIBLE : View.INVISIBLE);
+        searchButton.setVisibility(toggleOn ? View.INVISIBLE : View.VISIBLE);
     }
 
     public void OnClickSearch(View view) throws Exception {
@@ -76,6 +91,10 @@ public class MainActivity extends AppCompatActivity {
         //String ArtistName = unformattedString.replaceAll("\\s","+"); // Replace all whitespace with +
         String ArtistName = URLEncoder.encode(unformattedString, "UTF-8");
 
+        //Turn on loading wheel
+        toggleLoading(true);
+
+        //Search
         GetAccessTokens(ArtistName);
 
         //SearchForSongs(ArtistName); // Could be error here....
@@ -116,6 +135,13 @@ public class MainActivity extends AppCompatActivity {
                 int rank = 1;
                 Log.e(LOGTAG, "Song at #" + rank + " is " + topTenTracks.getTrackName(rank));
                 topTenTracksObj = topTenTracks; // Set top Ten Tracks Object
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        toggleLoading(false);
+                    }
+                });
 
 
             }

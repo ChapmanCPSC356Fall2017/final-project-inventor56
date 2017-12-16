@@ -7,10 +7,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.jsjos.topmusicdiscoveryapp.JSONObjects.Track;
 import com.example.jsjos.topmusicdiscoveryapp.R;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -21,6 +23,7 @@ public class SongFragment extends Fragment {
     private TextView artistNameTV;
     private TextView albumNameTV;
     private TextView songNameTV;
+    private ImageView albumCoverIV;
 
     private Track track;
     private String ranking = "#";
@@ -47,9 +50,13 @@ public class SongFragment extends Fragment {
         this.artistNameTV = v.findViewById(R.id.tv_artist_name);
         this.albumNameTV = v.findViewById(R.id.tv_album_name);
         this.songNameTV = v.findViewById(R.id.tv_song_name);
+        this.albumCoverIV = v.findViewById(R.id.iv_album_cover);
 
 
         Log.e(DEBUGLOG, "So we are in the song fragment");
+
+        // Load Album cover
+        Picasso.with(this.getContext()).load(track.retrieveAlbum().getFirstImage().getUrl()).into(albumCoverIV); // Get and set image
 
         rankingTV.setText(ranking);
         Log.e(DEBUGLOG, "So we " + ranking);

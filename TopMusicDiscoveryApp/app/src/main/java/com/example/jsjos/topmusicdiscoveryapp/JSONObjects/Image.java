@@ -11,4 +11,8 @@ public class Image implements Serializable{
     private int height;
     private String url;
     private int width;
+
+    public String getUrl() {
+        return this.url;
+    }
 }

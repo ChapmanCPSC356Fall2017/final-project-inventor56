@@ -32,6 +32,10 @@ public class Track implements Serializable {
         return this.album.getName();
     }
 
+    public Album retrieveAlbum() {
+        return this.album;
+    }
+
     public String getArtistNames() {
         boolean multipleArtists = false;
         StringBuilder totalArtistNames = new StringBuilder();

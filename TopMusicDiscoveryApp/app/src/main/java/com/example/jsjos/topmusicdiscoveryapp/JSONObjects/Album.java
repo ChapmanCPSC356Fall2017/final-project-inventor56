@@ -22,4 +22,8 @@ public class Album implements Serializable{
     String getName() {
         return this.name;
     }
+
+    public Image getFirstImage() { // Return the images for this album
+        return this.images[0]; // Just return the first loaded image (640x640), only need one photo
+    }
 }

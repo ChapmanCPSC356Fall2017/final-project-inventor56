@@ -1,10 +1,13 @@
 package com.example.jsjos.topmusicdiscoveryapp.JSONObjects;
 
+import java.io.Serializable;
+
 /**
  * Created by jsjos on 12/13/2017.
  */
 
-public class Artist {
+@SuppressWarnings("serial")
+public class Artist implements Serializable{
     private ExternalUrl external_urls;
     private String href;
     private String id;

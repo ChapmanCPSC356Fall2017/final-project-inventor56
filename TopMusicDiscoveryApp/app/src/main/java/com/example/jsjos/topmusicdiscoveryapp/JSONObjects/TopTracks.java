@@ -1,10 +1,13 @@
 package com.example.jsjos.topmusicdiscoveryapp.JSONObjects;
 
+import java.io.Serializable;
+
 /**
  * Created by jsjos on 12/13/2017.
  */
 
-public class TopTracks {
+@SuppressWarnings("serial")
+public class TopTracks implements Serializable{
     public Track[] tracks;
 
     public String getTrackName(int ranking) {

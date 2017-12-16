@@ -1,10 +1,13 @@
 package com.example.jsjos.topmusicdiscoveryapp.JSONObjects;
 
+import java.io.Serializable;
+
 /**
  * Created by jsjos on 12/12/2017.
  */
 
-public class ArtistInfo {
+@SuppressWarnings("serial")
+public class ArtistInfo implements Serializable{
     //@SerializedName("artists")
     public ArtistSV artists;
     public String getArtistID() {
@@ -14,7 +17,8 @@ public class ArtistInfo {
 
 }
 
-class ArtistSV {
+@SuppressWarnings("serial")
+class ArtistSV implements Serializable{
     private String href;
     private Item[] items;
     private int limit;
@@ -29,7 +33,8 @@ class ArtistSV {
 
 }
 
-class Item {
+@SuppressWarnings("serial")
+class Item implements Serializable{
     private ExternalUrl external_urls;
     private Follower followers;
     private String[] genres;
@@ -47,7 +52,8 @@ class Item {
 
 }
 
-class Follower {
+@SuppressWarnings("serial")
+class Follower implements Serializable{
     private String href;
     private int total;
 }

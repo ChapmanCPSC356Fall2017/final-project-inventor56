@@ -135,8 +135,13 @@ public class MainActivity extends AppCompatActivity {
                 int rank = 1;
                 Log.e(LOGTAG, "Song at #" + rank + " is " + topTenTracks.getTrackName(rank));
                 topTenTracksObj = topTenTracks; // Set top Ten Tracks Object
+
+                // Prepare to show your results
                 Intent i = new Intent(MainActivity.this, SliderActivity.class);
+                i.putExtra("TracksObject", topTenTracksObj);
+
                 startActivity(i);
+
                 /*
                 runOnUiThread(new Runnable() {
                     @Override
@@ -145,8 +150,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
                 */
-
-
             }
         });
     }

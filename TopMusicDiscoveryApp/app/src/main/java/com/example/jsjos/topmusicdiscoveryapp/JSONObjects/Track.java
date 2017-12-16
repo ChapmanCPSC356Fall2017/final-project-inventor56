@@ -1,10 +1,13 @@
 package com.example.jsjos.topmusicdiscoveryapp.JSONObjects;
 
+import java.io.Serializable;
+
 /**
  * Created by jsjos on 12/13/2017.
  */
 
-public class Track {
+@SuppressWarnings("serial")
+public class Track implements Serializable {
     private Album album;
     private Artist[] artists;
     private String[] available_markets;

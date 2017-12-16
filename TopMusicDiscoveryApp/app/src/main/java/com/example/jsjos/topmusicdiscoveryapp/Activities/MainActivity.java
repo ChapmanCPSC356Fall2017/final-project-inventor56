@@ -111,13 +111,20 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onResult(ArtistInfo artist) {
-                Log.e(LOGTAG, "Artist is " + artist.getArtistID());
-                artistInfoObj = artist; // Set artist info object
-
                 try {
+                    Log.e(LOGTAG, "Artist is " + artist.getArtistID());
+                    artistInfoObj = artist; // Set artist info object
                     SearchForTracks(artistInfoObj.getArtistID());
                 } catch (Exception e) {
                     e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            toggleLoading(false); // Toggle loading bar
+                            searchBox.getText().clear(); // Clear text
+                            searchBox.setHint("Invalid Artist! Please try again"); // Display error
+                        }
+                    });
                 }
             }
         });
@@ -132,31 +139,42 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onResult(TopTracks topTenTracks) {
-                int rank = 1;
-                Log.e(LOGTAG, "Song at #" + rank + " is " + topTenTracks.getTrackName(rank));
-                topTenTracksObj = topTenTracks; // Set top Ten Tracks Object
+                try {
+                    int rank = 1;
+                    Log.e(LOGTAG, "Song at #" + rank + " is " + topTenTracks.getTrackName(rank));
+                    topTenTracksObj = topTenTracks; // Set top Ten Tracks Object
 
-                // Prepare to show your results
-                Intent i = new Intent(MainActivity.this, SliderActivity.class);
-                i.putExtra("TracksObject", topTenTracksObj);
+                    // Prepare to show your results
+                    Intent i = new Intent(MainActivity.this, SliderActivity.class);
+                    i.putExtra("TracksObject", topTenTracksObj);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            toggleLoading(false);
+                        }
+                    });
 
-                startActivity(i);
+                    /////////////////////
+                    // Start View Pager!
+                    /////////////////////
+                    startActivity(i);
 
-                /*
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        toggleLoading(false);
-                    }
-                });
-                */
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            toggleLoading(false); // Toggle loading bar
+                            searchBox.getText().clear(); // Clear text
+                            searchBox.setHint("App Error! Please enter a different artist's name"); // Display error
+                        }
+                    });
+                }
             }
         });
     }
 
     public void GetAccessTokens(final String artist) throws Exception {
-
-
         if (!accessCredAttained){
             api.Authenticate(new APIData.AuthorizationCallback() {
                 @Override
@@ -167,26 +185,29 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onResult(AccessCredentials accessCred) {
-                    // Store here
-                    Log.e(LOGTAG, "Successful Callback!");
-                    authorizationInfo = accessCred; //  Set the authorization details to what was returned in the callback
-                    accessCredAttained = true;
-
                     try {
+                        // Store here
+                        Log.e(LOGTAG, "Successful Callback!");
+                        authorizationInfo = accessCred; //  Set the authorization details to what was returned in the callback
+                        accessCredAttained = true;
                         SearchForSongs(artist);
+                        Log.e(LOGTAG, authorizationInfo.accessToken);
                     } catch (Exception e) {
                         e.printStackTrace();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                toggleLoading(false); // Toggle loading bar
+                                searchBox.getText().clear(); // Clear text
+                                searchBox.setHint("Authentication error (Spotify server may be down). Try again"); // Display error
+                            }
+                        });
                     }
-
-                    Log.e(LOGTAG, authorizationInfo.accessToken);
                 }
             }); // Authenticate with server;
         }
         else {
+            // Start your search for songs in case you already have an authentication key
             SearchForSongs(artist); }
-
     }
-
-
-
 }

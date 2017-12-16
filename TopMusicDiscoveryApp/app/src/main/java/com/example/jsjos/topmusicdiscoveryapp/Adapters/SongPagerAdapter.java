@@ -34,6 +34,7 @@ public class SongPagerAdapter extends FragmentStatePagerAdapter {
 
         Bundle b = new Bundle();
         b.putSerializable("TrackObj", myTracks.getTrack(position)); // Put in the specific track
+        b.putInt("Ranking", position); // Ranking of track, no need to pass other tracks in this way
 
         frag.setArguments(b); // Set the arguments
 

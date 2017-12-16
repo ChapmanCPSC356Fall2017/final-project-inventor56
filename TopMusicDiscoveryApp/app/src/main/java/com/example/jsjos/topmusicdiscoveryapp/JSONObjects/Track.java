@@ -25,10 +25,24 @@ public class Track implements Serializable {
     private String type;
     private String uri;
 
-    String getTrackName() {
+    public String getTrackName() {
         return this.name;
     }
-    String getAlbumName() {
+    public String getAlbumName() {
         return this.album.getName();
+    }
+
+    public String getArtistNames() {
+        boolean multipleArtists = false;
+        StringBuilder totalArtistNames = new StringBuilder();
+        int length = artists.length;
+        if (length > 1)
+            multipleArtists = true;
+        for (int i = 0; i < length; i ++) {
+            totalArtistNames.append(artists[i].getName());
+            if(multipleArtists && i != length-1)
+                totalArtistNames.append(", ");
+        }
+        return totalArtistNames.toString();
     }
 }

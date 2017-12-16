@@ -1,5 +1,6 @@
 package com.example.jsjos.topmusicdiscoveryapp.Adapters;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -13,7 +14,7 @@ import com.example.jsjos.topmusicdiscoveryapp.JSONObjects.Track;
 public class SongPagerAdapter extends FragmentStatePagerAdapter {
     private final String LOGTAG = "Pager Adaper";
 
-    private static final int NUM_PAGES = 10; // We display the top ten, fix later
+   private int num_pages; // We display the top ten, or less if none available
 
     // Here are all the tracks we'll be displaying
     private TopTracks myTracks;
@@ -21,12 +22,21 @@ public class SongPagerAdapter extends FragmentStatePagerAdapter {
     public SongPagerAdapter(FragmentManager fm, TopTracks tracksObj) {
         super(fm);
         myTracks = tracksObj;
+        // Set length to be length of tracks
+        num_pages = myTracks.getLength(); // Set how many pages we will be viewing
+
     }
 
     @Override
     public Fragment getItem(int position) {
         SongFragment frag = new SongFragment();
         Log.e(LOGTAG, "We made it here");
+
+        Bundle b = new Bundle();
+        b.putSerializable("TrackObj", myTracks.getTrack(position)); // Put in the specific track
+
+        frag.setArguments(b); // Set the arguments
+
         return frag;
 
 
@@ -34,6 +44,6 @@ public class SongPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return NUM_PAGES; // Ten Fragments
+        return num_pages; // Ten Fragments
     }
 }

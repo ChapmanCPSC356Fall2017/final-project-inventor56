@@ -14,6 +14,14 @@ public class TopTracks implements Serializable{
         return tracks[ranking-1].getTrackName(); // Return name
     }
 
+    public Track getTrack(int pos) {
+        return tracks[pos];
+    }
+
+    public int getLength() {
+        return tracks.length;
+    }
+
 }
 
 

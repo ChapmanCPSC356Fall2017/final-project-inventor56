@@ -28,6 +28,8 @@ public class SongFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        track = (Track) getArguments().getSerializable("TrackObj"); // Set the specific track for this fragment
+
         //String access = getArguments().getString(ACCESS_KEY)
     }
 
@@ -42,7 +44,10 @@ public class SongFragment extends Fragment {
 
 
         Log.e(DEBUGLOG, "So we are in the song fragment");
-        songNameTV.setText("etesting");
+
+        songNameTV.setText(track.getTrackName());
+        artistNameTV.setText(track.getArtistNames());
+        albumNameTV.setText(track.getAlbumName());
 
         return v;
     }

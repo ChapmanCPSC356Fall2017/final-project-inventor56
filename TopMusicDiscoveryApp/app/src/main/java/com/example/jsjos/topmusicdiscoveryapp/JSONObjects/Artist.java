@@ -14,4 +14,8 @@ public class Artist implements Serializable{
     private String name;
     private String type;
     private String uri;
+
+    public String getName() {
+        return name;
+    }
 }

@@ -10,7 +10,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/enter_artist_text"
-        android:textSize="30sp"/>
+        android:textSize="30sp"
+        android:fontFamily=""/>
     <EditText
         android:id="@+id/search_box"
         android:layout_width="wrap_content"

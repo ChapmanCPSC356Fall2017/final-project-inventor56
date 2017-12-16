@@ -3,4 +3,5 @@
     <string name="enter_artist_text">Please enter the name of the artist you would like to search for</string>
     <string name="search_button_text">Search</string>
     <string name="hint_search">Enter the artist\'s name here</string>
+    <string name="image_desc">An image of the album cover for the selected song</string>
 </resources>

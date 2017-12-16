@@ -46,7 +46,7 @@ public class SongFragment extends Fragment {
         View v = inflater.inflate(R.layout.song_fragment_layout, container, false);
 
 
-        this.rankingTV = v.findViewById(R.id.tv_number_ranking);
+        //this.rankingTV = v.findViewById(R.id.tv_number_ranking);
         this.artistNameTV = v.findViewById(R.id.tv_artist_name);
         this.albumNameTV = v.findViewById(R.id.tv_album_name);
         this.songNameTV = v.findViewById(R.id.tv_song_name);
@@ -56,9 +56,14 @@ public class SongFragment extends Fragment {
         Log.e(DEBUGLOG, "So we are in the song fragment");
 
         // Load Album cover
-        Picasso.with(this.getContext()).load(track.retrieveAlbum().getFirstImage().getUrl()).into(albumCoverIV); // Get and set image
+        Picasso.with(this.getContext())
+                .load(track.retrieveAlbum()
+                        .getFirstImage()
+                        .getUrl())
+                //.resize(500,500)
+                .into(albumCoverIV); // Get and set image
 
-        rankingTV.setText(ranking);
+        //rankingTV.setText(ranking);
         Log.e(DEBUGLOG, "So we " + ranking);
         songNameTV.setText(track.getTrackName());
         artistNameTV.setText(track.getArtistNames());
